@@ -5,12 +5,12 @@ traineeEmail: "manish.dixit@successive.tech",
 reviewerEmail: "faiyaz.ahmad@successive.tech"
 },
 {
- traineeEmail: "manish.dixit@successive.tech*//",
+ traineeEmail: "manish.dixit@successive.tech*1",
 reviewerEmail: "faiyaz.ahmad@successive.tech"
 },
 {
  traineeEmail: "manish.dixit@successive.tech",
-reviewerEmail: "faiyaz.ahmad@successive.tec*/*h"
+reviewerEmail: "faiyaz.ahmad@successive.tech"
    },
 {
 traineeEmail: "manish.dixit@successive.tech",
@@ -27,11 +27,15 @@ reviewerEmail: "faiyaz.ahmad@successive.t"
 {
     traineeEmail: "manish.dixit@successive.tech",
     reviewerEmail: "faiyaz.ahmad@successive.tech"
-    }
+    },
+    {
+        traineeEmail: "manish.dixit@successive.tech98",
+       reviewerEmail: "faiyaz.ahmad@successive.tech"
+       }
 ];
-let checkemail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+let checkemail = /^[a-zA-Z0-9._-]+@[successive]+\.[tech]{2,4}$/;
 
-let valid=0,invalid=0,valid_users="",invalid_users="";
+let valid_users=[],invalid_users=[];
 
 // function for validate the email.
 function validateEmail(email)
@@ -40,23 +44,23 @@ return checkemail.test(String(email).toLowerCase());
 }
 //console.log(validateEmail("manish.dixit@successive.tech"));
 
-//function for validate the user
+//function for validate the userSS
 function validateUsers(users)
 {   
-    for(let i=0;i<users.length;i++){
-    const {traineeEmail,reviewerEmail} = users[i];
+    users.forEach((users)=>{
+    const {traineeEmail,reviewerEmail} = users;
     if(validateEmail(traineeEmail) && validateEmail(reviewerEmail)){
-        valid++;
-        valid_users+="("+traineeEmail+" , "+reviewerEmail+") ";
+        valid_users.push("("+traineeEmail+", "+reviewerEmail+") ");
       }
       else{
-          invalid++;
-          invalid_users+="("+traineeEmail+" , "+reviewerEmail+") ";
+          invalid_users.push("("+traineeEmail+", "+reviewerEmail+") ");
       }
-}
-console.log("Total valid users:",valid);
+});
+let validlen=valid_users.length;
+console.log("Total valid users:",validlen);
 console.log("The users are: ",valid_users);
-console.log('Total invalid users',invalid);
+let invalidlen=invalid_users.length;
+console.log('Total invalid users',invalidlen);
 console.log('The users is: ',invalid_users);
 }
 validateUsers(users);
