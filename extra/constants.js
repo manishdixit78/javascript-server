@@ -1,3 +1,5 @@
+
+// all the constant values in above file.
 const permissions={
     'getUsers': {
     all: ['head-trainer'],

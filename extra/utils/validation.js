@@ -1,51 +1,7 @@
-const users=
-[
-{
-traineeEmail: "manish.dixit@successive.tech",
-reviewerEmail: "faiyaz.ahmad@successive.tech"
-},
-{
- traineeEmail: "manish.dixit@successive.tech*1",
-reviewerEmail: "faiyaz.ahmad@successive.tech"
-},
-{
- traineeEmail: "manish.dixit@successive.tech",
-reviewerEmail: "faiyaz.ahmad@successive.tech"
-   },
-{
-traineeEmail: "manish.dixit@successive.tech",
-reviewerEmail: "faiyaz.ahmad@successive.tech"
-},
-{
-traineeEmail: "manish.dixit@successive.te/",
-reviewerEmail: "faiyaz.ahmad@successive.tech//*"
-},
-{
-traineeEmail: "manish.dixit@successive.te/*",
-reviewerEmail: "faiyaz.ahmad@successive.t"
-},
-{
-    traineeEmail: "manish.dixit@successive.tech",
-    reviewerEmail: "faiyaz.ahmad@successive.tech"
-    },
-    {
-        traineeEmail: "manish.dixit@successive.tech98",
-       reviewerEmail: "faiyaz.ahmad@successive.tech"
-       }
-];
-let checkemail = /^[a-zA-Z0-9._-]+@[successive]+\.[tech]{2,4}$/;
 
 let valid_users=[],invalid_users=[];
-
-// function for validate the email.
-/*function validateEmail(email)
-{
-return checkemail.test(String(email).toLowerCase());
-}*/
-//console.log(validateEmail("manish.dixit@successive.tech"));
-
-//function for validate the userSS
- function validateUsers(users)
+// define a function validateUsers for validate the email.
+function validateUsers(users)
 {   
     users.forEach((users)=>{
     const {traineeEmail,reviewerEmail} = users;
@@ -63,8 +19,12 @@ let invalidlen=invalid_users.length;
 console.log('Total invalid users',invalidlen);
 console.log('The users is: ',invalid_users);
 }
-validateUsers(users);
+//validateUsers(users);
 
+
+//import function validateEmail from helpers.js file.
 import{validateEmail} from './helpers.js';
 
+// export the functions validateUsers and validateEmail
 export{validateUsers};
+export {validateEmail};
