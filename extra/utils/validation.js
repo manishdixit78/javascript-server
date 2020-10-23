@@ -1,4 +1,4 @@
-let users=
+const users=
 [
 {
 traineeEmail: "manish.dixit@successive.tech",
@@ -38,14 +38,14 @@ let checkemail = /^[a-zA-Z0-9._-]+@[successive]+\.[tech]{2,4}$/;
 let valid_users=[],invalid_users=[];
 
 // function for validate the email.
-function validateEmail(email)
+/*function validateEmail(email)
 {
 return checkemail.test(String(email).toLowerCase());
-}
+}*/
 //console.log(validateEmail("manish.dixit@successive.tech"));
 
 //function for validate the userSS
-function validateUsers(users)
+ function validateUsers(users)
 {   
     users.forEach((users)=>{
     const {traineeEmail,reviewerEmail} = users;
@@ -64,3 +64,7 @@ console.log('Total invalid users',invalidlen);
 console.log('The users is: ',invalid_users);
 }
 validateUsers(users);
+
+import{validateEmail} from './helpers.js';
+
+export{validateUsers};
