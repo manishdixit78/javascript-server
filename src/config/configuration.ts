@@ -1,10 +1,7 @@
-//import the Iconfig interface and config
-const envVars=require('dotenv').config()
-
-console.log("Inside config: ",envVars);
-
-
-const config:IConfig= envVars;
-Object.freeze(config);
+// import interface
+import { IConfig } from './IConfig';
+const envVars = require ('dotenv').config()
+console.log("inside config" , envVars);
+const config = envVars.parsed;
 export default config;
-import {IConfig} from './IConfig';
+Object.freeze( config );
