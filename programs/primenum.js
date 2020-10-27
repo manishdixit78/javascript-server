@@ -18,7 +18,7 @@ do
         console.log("Not a prime number");
     }
 }
-checkPrime(17);
+checkPrime(4);
 checkPrime(20);
 checkPrime(9);
 checkPrime(23);
