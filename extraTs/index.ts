@@ -8,8 +8,9 @@ import {permissions} from './constants.js';
 
 // import the functions from validateUsers and validdateEmail from util/index
 import {validateUsers} from './utils/index';
-import {validateEmail} from './utils/index';
+//import {validateEmail} from './utils/index';
 
+import{Iusers} from './interfaces';
 
 // calling the function and pass the arguments
 diamondpattern(5);
@@ -58,8 +59,5 @@ reviewerEmail: "faiyaz.ahmad@successive.t"
        reviewerEmail: "faiyaz.ahmad@successive.tech"
        }
 ];
-
-import{Iusers} from './interfaces';
-
 // calling the function validateUsers and pass the arguments.
 validateUsers(users);
