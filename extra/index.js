@@ -46,7 +46,8 @@ Utils:
 
 
 // import the function of diamondpattern and equilateTriangle from patterns/index
-import {diamondpattern, equilateTriangle} from './patterns/index.js';
+import {diamondpattern} from './patterns/index.js';
+import {equilateTriangle} from './patterns/index.js';
 
 // import the functions from validateUsers and validdateEmail from util/index
 import {validateUsers} from './utils/index';
