@@ -1,3 +1,5 @@
+//import function validateEmail from helpers.js file.
+import{validateEmail} from './helpers.js';
 
 let valid_users=[],invalid_users=[];
 // define a function validateUsers for validate the email.
@@ -20,10 +22,6 @@ console.log('Total invalid users',invalidlen);
 console.log('The users is: ',invalid_users);
 }
 //validateUsers(users);
-
-
-//import function validateEmail from helpers.js file.
-import{validateEmail} from './helpers.js';
 
 // export the functions validateUsers and validateEmail
 export{validateUsers};
