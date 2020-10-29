@@ -48,25 +48,22 @@ Utils:
 // import the function of diamondpattern and equilateTriangle from patterns/index
 import {diamondpattern, equilateTriangle} from './patterns/index.js';
 
-// calling the function and pass the arguments
-diamondpattern(5);
-console.log();
-equilateTriangle(4);
+// import the functions from validateUsers and validdateEmail from util/index
+import {validateUsers} from './utils/index';
+//import {validateEmail} from './utils/index';
 
 // import the hasPermission from utils/index and permissions from constants
 import {hasPermission} from './utils/index.js';
 import {permissions} from './constants.js';
 
+// calling the function and pass the arguments
+diamondpattern(5);
+console.log();
+equilateTriangle(4);
+
 // calling the hasPermission method and pass the arguments.
 hasPermission(permissions.getUsers,'head-trainer','all');
 console.log();
-
-// import the functions from validateUsers and validdateEmail from util/index
-import {validateUsers} from './utils/index';
-import {validateEmail} from './utils/index';
-
-
-
 
 // define constant values according to the instruction given in the ticket39519
 const users=

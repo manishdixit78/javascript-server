@@ -1,8 +1,9 @@
 // create a class and define methods according to the ticket#39521
 import * as express from "express";
+import { IConfig } from './config/IConfig';
 class Server {
 app
-constructor( private config ) {
+constructor( private config:IConfig ) {
 this.app=express()
 }
 bootstrap() {
