@@ -1,4 +1,4 @@
-export function equilateTriangle(noOfRows)
+function equilateTriangle(noOfRows)
 {
 let str = "";
 
@@ -24,4 +24,5 @@ for(let i=2;i<=10;i++)
 {
     equilateTriangle(i);
 }*/
+export  {equilateTriangle};
 
