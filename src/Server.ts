@@ -5,9 +5,11 @@ import { notFoundHandler, errorHandler } from './libs/routes';
 import notFoundRoute from "./libs/routes/notFoundRoute";
 
 import routes from './router';
+//import mainRouter from './router'
 class Server {
     app
     constructor(private config) {
+        this.config=config;
         this.app = express()
     }
     bootstrap() {

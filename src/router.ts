@@ -3,7 +3,7 @@ import { traineeRouter } from './controllers';
 
 const mainRouter = Router();
 
-mainRouter.use('./trainee', traineeRouter);
+mainRouter.use('/trainee', traineeRouter);
 
 export default mainRouter;
 
