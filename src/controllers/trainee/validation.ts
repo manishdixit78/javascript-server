@@ -12,7 +12,7 @@ const config = {
         },
 
         name: {
-            required: true, 
+            required: true,
             regex: '',
             in: ['body'],
             errorMessage: 'Name is required',
@@ -29,15 +29,15 @@ const config = {
     get: {
         skip: {
             required: false,
-            default: 0, 
+            default: 0,
             number: true,
-            in: ['query'], 
+            in: ['query'],
             errorMessage: 'Skip is invalid',
         },
 
         limit: {
             required: false,
-            default: 10, 
+            default: 10,
             number: true,
             in: ['query'],
             errorMessage: 'Limit is invalid',
