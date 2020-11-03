@@ -1,11 +1,15 @@
-// create a class and define methods according to the ticket#39522
+// create a class and define methods according to the ticket#39523
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { notFoundHandler, errorHandler } from './libs/routes';
 import notFoundRoute from "./libs/routes/notFoundRoute";
+
+import routes from './router';
+//import mainRouter from './router'
 class Server {
     app
     constructor(private config) {
+        this.config=config;
         this.app = express()
     }
     bootstrap() {
@@ -16,7 +20,7 @@ class Server {
     setupRouts() {
         const { app } = this;
 
-        app.use ((req, res, next) => {
+        app.use((req, res, next) => {
             console.log('Inside First MidleWare');
             next()
         });
@@ -26,6 +30,7 @@ class Server {
             res.send('I am fine');
         });
 
+        app.use('/api', routes);
         app.use(notFoundHandler);
         app.use(errorHandler);
 
