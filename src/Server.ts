@@ -5,6 +5,7 @@ import { notFoundHandler, errorHandler } from './libs/routes';
 import notFoundRoute from "./libs/routes/notFoundRoute";
 
 import routes from './router';
+import Database from './libs/Database'
 //import mainRouter from './router'
 class Server {
     app
@@ -40,13 +41,20 @@ class Server {
         this.app.use(bodyParser.json({ type: 'application/*+json' }))
     }
     run() {
-        const { app, config: { PORT } } = this;
-        app.listen(PORT, (err) => {
+        const { app, config: { PORT,MONGO_URL } } = this;
+        Database.open(MONGO_URL)
+        .then((res)=>{
+            console.log('Successfully connected to Mongodb');
+        
+        this.app.listen(PORT, (err) => {
             if (err) {
                 console.log(err);
             }
             console.log(`App is running on port ${PORT}`);
-        })
+        });
+    })
+    .catch(err=>console.log(err))
+    return this;
     }
 }
 export default Server;
