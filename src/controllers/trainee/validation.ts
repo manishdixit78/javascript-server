@@ -49,7 +49,7 @@ const config = {
             in: ['body']
         },
         dataToUpdate: {
-            in: ['body'],
+            in: ['body'], 
             required: true,
             isObject: true,
             custom: function (dataToUpdate) { },
