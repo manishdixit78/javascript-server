@@ -2,8 +2,11 @@ import UserRepository from '../repositories/user/UserRepository';
 
 const userRepository: UserRepository = new UserRepository();
 export default () => {
+    
     userRepository.count()
+    
         .then(res => {
+            console.log('The Count is: ', res );
             if (res === 0) {
                 console.log('data seeding in progress');
                
