@@ -1,4 +1,6 @@
 // create a class according to instructions that mention in #39523
+import { NextFunction, Response } from 'express';
+import UserRepository from '../../repositories/user/UserRepository';
 class TraineeController {
     static instance: TraineeController;
     static getInstance() {
@@ -8,19 +10,26 @@ class TraineeController {
         TraineeController.instance = new TraineeController();
         return TraineeController.instance;;
     }
-    get( req, res, next ) {
+       constructor(){
+           this.get= this.get.bind(this);
+       }
+        userRepository: UserRepository=new UserRepository();
+    get=( req, res, next ) =>{
         try {
             console.log( 'Inside GET method of Trianee controller ' );
-
-            res.send({
-                message: 'Trainee fetchd successfully',
-                data: [
+              this.userRepository.find({role: "trainee"}, {}, {})
+             .then((res)=>{
+console.log('Response is: ',res);
+             })
+          
+            const  data= [
                     {
-                        name: 'Trainee1',
-                        address: 'noida'
+                        name: 'trainee'
+                       
                     }
                 ]
-            })
+             res.status(200).send({message:'successfully fetched Trainee', data:data})
+
         } catch (err) {
             console.log( 'Inside Error', err );
         }
