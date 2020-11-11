@@ -12,6 +12,7 @@ class TraineeController {
     }
        constructor(){
            this.get= this.get.bind(this);
+           this.create= this.create.bind(this);
        }
         userRepository: UserRepository=new UserRepository();
     get=( req, res, next ) =>{
@@ -34,10 +35,13 @@ console.log('Response is: ',res);
             console.log( 'Inside Error', err );
         }
     }
-    create( req, res, next ) {
+    create=( req, res, next )=>{
         try {
             console.log( 'Inside POST method of Trianee controller ' );
-
+              this.userRepository.create({role: req.body.role, name: req.body.name})
+              .then((res)=>{
+                  console.log('Response is: ',res);
+              })
             res.send({
                 message: 'Trainee created successfully',
                 data: {

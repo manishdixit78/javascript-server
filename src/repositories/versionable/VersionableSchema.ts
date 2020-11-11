@@ -8,14 +8,28 @@ class VersionableSchema extends mongoose.Schema {
                 default: Date.now,
                 type: Date,
             },
+            createdBy: {
+                type: String
+            },
+            updatedAt: {
+                default: Date.now,
+                type: Date,
+            },
+            updatedBy: {
+                type: String
+            },
             deletedAt: {
                 required: false,
                 type: Date,
             },
+            deletedBy: {
+                type: String
+            },
             originalId: {
                 required: true,
                 type: String,
-            }
+            },
+
         }, options);
         super(versionedOptions, collections);
     }

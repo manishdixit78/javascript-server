@@ -19,6 +19,8 @@ const model=new this.model({
 ...options,
 _id:id,
 originalId:id,
+createdAt: Date.now(),
+createdBy: id
 });
 return await model.save();
 }
@@ -43,7 +45,7 @@ const finalQuery={deleteAt:null,...query};
 return this.model.find(finalQuery,projection,options);
 }
 public invalidate(id:any):DocumentQuery<D,D>{
-return this.model.update({originalId: id , deletedAt: null}, {});
+return this.model.update({originalId: id , deletedAt: null}, {/*deletedAt:Date.now()*/});
 }
 
 public async update(data:any):Promise<D>{
