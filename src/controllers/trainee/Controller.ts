@@ -1,5 +1,6 @@
 // create a class according to instructions that mention in #39523
 import { NextFunction, Response } from 'express';
+import { userModel } from '../../repositories/user/UserModel';
 import UserRepository from '../../repositories/user/UserRepository';
 class TraineeController {
     static instance: TraineeController;
@@ -36,32 +37,27 @@ res.status(200).send({message:'successfully fetched Trainee', data:res1})
                   console.log('Response is: ',res1);
                   res.status(200).send({message:'Trainee created successfully', data:res1})
               })
-            // res.send({
-            //     message: 'Trainee created successfully',
-            //     data: {
-            //         name: 'Trainee1',
-            //         address: 'noida'
-            //     }
-            // })
         } catch (err) {
             console.log( 'Inside Error', err );
         }
     }
     update=( req, res, next )=> {
         try {
+            const {role, name, id, email}=req.body;
             console.log( 'Inside Update method of Trianee controller ' );
-            this.userRepository.update({id:req.body.id},{data:req.body.dataToUpdate})
-              .then((res)=>{
-                  console.log('Response is: ',res);
-              })
+            userModel.findOne({originalId:id},(err,result)=>{
 
-            res.send({
-                message: 'Trainee updated successfully',
-                data: {
-                    name: 'Trainee1',
-                    address: 'noida'
+                if(result!=null)
+                {
+                    this.userRepository.update({name:name,role:role,email:email},result.id)
+                        .then((data)=>{
+                            console.log("respnse is ",data);
+                            res.status(200).send({message:"successufijf upddate",data:data});
+                        })
                 }
             })
+
+           
         } catch (err) {
             console.log( 'Inside Error', err );
         }
