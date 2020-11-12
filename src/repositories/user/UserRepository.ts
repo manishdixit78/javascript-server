@@ -26,9 +26,9 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
         });
         return model.save();
     }
-    public update(data: any): Promise<IUserModel> {
+    public update(id: any, data: any): Promise<IUserModel> {
         console.log('USerRepository:: update', data);
-        return super.update(data);
+        return super.update(id, data);
     }
     public count() {
         return userModel.countDocuments();

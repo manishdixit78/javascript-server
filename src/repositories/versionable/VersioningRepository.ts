@@ -3,7 +3,7 @@ import {DocumentQuery,Query} from "mongoose";
 
 export default class VersioningRepository<D extends mongoose.Document,M extends mongoose.Model<D>>
 {
-public static generateObjectId(){
+    public static generateObjectId(){
 return String(mongoose.Types.ObjectId());
 }
 
@@ -45,10 +45,10 @@ const finalQuery={deleteAt:null,...query};
 return this.model.find(finalQuery,projection,options);
 }
 public invalidate(id:any):DocumentQuery<D,D>{
-return this.model.update({originalId: id , deletedAt: null}, {/*deletedAt:Date.now()*/});
+return this.model.update({originalId: id , deletedAt: null}, {});
 }
 
-public async update(data:any):Promise<D>{
+public async update(id ,data:any):Promise<D>{
 console.log("Looking for privious valid document ");
 const prev=await this.findOne({originalId:data.originalId,deletedAt:null});
 console.log("Prev : ",prev);
@@ -69,4 +69,8 @@ delete newData.deleteAt;
 const model=new this.model(newData);
 return model.save();
 }
+
+
+
 }
+
