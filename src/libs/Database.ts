@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose'
-
+import seedData from './seedData'
 class Database {
     static open(MONGO_URL){
       
@@ -11,8 +11,8 @@ class Database {
                console.log(err);
                reject(err);
                return;
-           } 
-            
+           }
+            seedData();
            resolve(null);
          
         }) 
