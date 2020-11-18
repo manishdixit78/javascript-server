@@ -7,9 +7,9 @@ import { authMiddlware } from '../../libs/routes';
 const traineeRouter = Router();
 
 traineeRouter.route('/')
-    .get(validationHandler(validation.get), TraineeController.get)
-    .post(validationHandler(validation.create), TraineeController.create)
-    .put(validationHandler(validation.update), TraineeController.update)
-    .delete(validationHandler(validation.delete), TraineeController.delete);
+    .get(authMiddlware('getUser','read'),validationHandler(validation.get), TraineeController.get)
+    .post(authMiddlware('getUser','read'),validationHandler(validation.create), TraineeController.create)
+    .put(authMiddlware('getUser','read'),validationHandler(validation.update), TraineeController.update)
+    .delete(authMiddlware('getUser','read'),validationHandler(validation.delete), TraineeController.delete);
 
 export default traineeRouter;

@@ -27,10 +27,10 @@ class UserController {
             console.log(email);
             userModel.findOne({ email: email }, (err, result) => {
                 if (result) {
-                    if (password === result.password) {
+                    if (bcrypt.compareSync(password,result.password)) {
 
-                        result.password = bcrypt.hashSync(result.password, 10);
-                        const token = jwt.sign({ result }, 'xMi43lDEhAHie5lL5V6Sord0PJsim4UU');
+                        // result.password = bcrypt.hashSync(result.password, 10);
+                        const token = jwt.sign({ result }, config.secretKey);
                         console.log(result);
                         console.log(token);
                         res.send({
