@@ -19,3 +19,4 @@ class UserSchema extends VersionableSchema {
     }
 }
 export default UserSchema;
+//

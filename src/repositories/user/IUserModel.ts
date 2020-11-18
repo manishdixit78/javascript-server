@@ -11,3 +11,4 @@ export default interface IUserModel extends mangoose.Document {
     deletedAt: Date;
     originalId: string;
 }
+// 
