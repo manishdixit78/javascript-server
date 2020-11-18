@@ -7,8 +7,7 @@ const UserRouter = Router();
 
 UserRouter.route('/me')
     .get(authMoiddleWare('getUser', 'read'), UserController.me);
-
 UserRouter.route('/login')
     .post(UserController.login);
-    
+
 export default UserRouter;

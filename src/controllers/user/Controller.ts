@@ -4,7 +4,6 @@ import UserRepository from '../../repositories/user/UserRepository';
 import * as bcrypt from 'bcrypt';
 import config from '../../config/configuration';
 import { userModel } from "../../repositories/user/UserModel";
-
 class UserController {
     static instance: UserController;
     static getInstance() {

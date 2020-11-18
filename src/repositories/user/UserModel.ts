@@ -10,5 +10,4 @@ export const userModel: mongoose.Model< IUserModel > = mongoose.model<IUserModel
         userSchema,
        'User',
         true,
-
     );

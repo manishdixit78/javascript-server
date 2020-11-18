@@ -8,4 +8,5 @@ export default interface IUserModel extends mangoose.Document {
     password: string;
     deletedAt: Date;
     originalId: string;
+    
 }
