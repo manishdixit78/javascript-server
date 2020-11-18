@@ -1,4 +1,3 @@
-// create a class according to instructions that mention in #39523
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import UserRepository from '../../repositories/user/UserRepository';
