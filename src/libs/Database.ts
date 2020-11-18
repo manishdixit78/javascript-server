@@ -11,7 +11,7 @@ class Database {
                console.log(err);
                reject(err);
                return;
-           } 
+           }
             seedData();
            resolve(null);
          
