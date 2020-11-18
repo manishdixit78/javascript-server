@@ -10,3 +10,4 @@ export default interface IUserModel extends mangoose.Document {
     originalId: string;
     
 }
+// 
