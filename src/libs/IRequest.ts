@@ -4,7 +4,8 @@ interface IRequest extends Request {
     body: any,
     param: any,
     query: any,
-    user: any
+    user: any,
+    headers: any
 }
 
 export default IRequest;
