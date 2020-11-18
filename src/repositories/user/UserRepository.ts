@@ -30,7 +30,12 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
         console.log('USerRepository:: update', data);
         return super.update(id, data);
     }
+
+    public deleteData(id, remover) {
+        return super.delete(id, remover);
+    }
     public count() {
         return userModel.countDocuments();
     }
+
 }
