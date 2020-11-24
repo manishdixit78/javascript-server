@@ -12,4 +12,4 @@ traineeRouter.route('/')
     .put(validationHandler(validation.update), TraineeController.update)
     .delete(validationHandler(validation.delete), TraineeController.delete);
 
-export default traineeRouter;
+export default traineeRouter; 

@@ -13,7 +13,5 @@ UserRouter.route('/me')
 UserRouter.route('/login')
     .post(UserController.login);
 
+export default UserRouter; 
 
-
-export default UserRouter;
-// 
