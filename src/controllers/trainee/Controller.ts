@@ -31,7 +31,7 @@ class TraineeController {
             } 
             else
             sort = { createdAt: -1 };
-            const trainee = await this.userRepository.list1(sort, req.query.skip, req.query.limit);
+            const trainee = await this.userRepository.list1('trainee', sort, req.query.skip, req.query.limit);
             const countTrainee = await this.userRepository.count()
             console.log('count is ' , countTrainee)
             this.userRepository.getAll()
