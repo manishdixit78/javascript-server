@@ -4,12 +4,11 @@ import UserRepository from '../../repositories/user/UserRepository';
 import * as bcrypt from 'bcrypt';
 import config from '../../config/configuration';
 import { userModel } from "../../repositories/user/UserModel";
-
 class UserController {
     static instance: UserController;
     static getInstance() {
         if (UserController.instance) {
-            return UserController.instance;
+            return UserController.instance; 
         }
         UserController.instance = new UserController();
         return UserController.instance;
@@ -59,6 +58,6 @@ class UserController {
     }
 }
 export default UserController.getInstance();
-
+// conflict
 
 

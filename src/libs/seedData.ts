@@ -24,5 +24,6 @@ export default () => {
             console.log('data is already seeded');    
                 }
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err)); 
 }
+  
