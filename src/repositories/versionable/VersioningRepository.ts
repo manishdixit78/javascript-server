@@ -107,10 +107,15 @@ export default class VersioningRepository<D extends mongoose.Document, M extends
 
             });
     }
+    public async list(userRole, sort, skip, limit): Promise<D[]> {
+        return this.model.find({role: userRole}).sort(sort).skip(Number(skip)).limit(Number(limit));
+    }
 }
 
 
 
 
+
+ 
 
 
