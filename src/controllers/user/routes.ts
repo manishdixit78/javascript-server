@@ -6,9 +6,10 @@ import authMoiddleWare from "../../libs/routes/authMoiddleWare";
 const UserRouter = Router();
 
 UserRouter.route('/me')
-    .get(authMoiddleWare('getUser', 'read'), UserController.me);
+    .get(authMoiddleWare('getUser', 'read'),validationHandler(validation.get), UserController.me);
+
 UserRouter.route('/login')
-    .post(UserController.login);
+    .post(authMoiddleWare('getUser','read'),validationHandler(validation.create),UserController.login);
 
 export default UserRouter; 
 

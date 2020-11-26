@@ -68,7 +68,7 @@ class TraineeController {
             const id = req.params.id;
             const userData = userModel.findOne({ originalId: id })
             userModel.findOne({ originalId: id })
-            console.log(id, "value of id")
+            console.log(id, "  Value of ID")
             const remover = '5fb3663da080091a8c21d58b';
             console.log(remover, " remover")
             const user = new UserRepository();

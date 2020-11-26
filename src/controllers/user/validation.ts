@@ -4,7 +4,7 @@ const config = {
             required: true, string: true,
             in: ['body'],
             custom: function (value) {
-                console.log('Value', value);
+                console.log('Value', value); 
                 throw {
                     error: 'Error Occured', message: 'Message'
                 }
