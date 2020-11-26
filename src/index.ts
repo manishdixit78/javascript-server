@@ -4,6 +4,7 @@ import config from './config/configuration';
 console.log("config is " , config);
 const server=new Server( config );
 server.bootstrap().run();
+server.initSwagger();
 
 /*                Task
 Create a method initBodyParser in Server.ts file

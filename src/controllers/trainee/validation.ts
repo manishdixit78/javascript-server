@@ -10,10 +10,17 @@ const config = {
                 }
             }
         },
+        email: {
+            required: true,
+            string: true,
+            regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((successive.tech))$/,
+            in: ['body'],
+            errorMessage: 'Email is required',
+        },
 
         name: {
             required: true,
-            regex: '',
+            regex: /^[a-zA-Z0-9\-]+$/,
             in: ['body'],
             errorMessage: 'Name is required',
         }
@@ -22,7 +29,7 @@ const config = {
         id: {
             required: true,
             errorMessage: 'Id is required',
-            in: ['params']
+            in: ['query']
         }
     },
 
