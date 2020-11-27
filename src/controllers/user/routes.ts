@@ -28,7 +28,6 @@ const UserRouter = Router();
  *              name: Manish Dixit
  *              email: manishdixit@successive.tech
  *              role: trainee
- *          
  *      Login:
  *        type: object
  *        properties:
@@ -125,8 +124,6 @@ UserRouter.route('/me')
  */
 
 UserRouter.route('/login')
-    .post(authMoiddleWare('getUser','read'),validationHandler(validation.create),UserController.login);
-
-
-
+   .post(validationHandler(validation.create),UserController.login);
+    
 export default UserRouter;
