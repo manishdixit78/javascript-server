@@ -10,7 +10,7 @@ const traineeRouter = Router();
 
 /**
  * @swagger
- *
+ *   
  *  definitions:
  *      TraineePost:
  *        type: object
@@ -71,6 +71,8 @@ traineeRouter.route('/')
  * /api/trainee:
  *   get:
  *     description: List of all the trainees
+ *     tags:
+ *      - Trainee
  *     security:
  *       - Bearer: []
  *     consumes:
@@ -134,6 +136,8 @@ traineeRouter.route('/')
  * /api/trainee: 
  *   post:
  *     description: Returns the success reponse on creation
+ *     tags:
+ *      - Trainee
  *     security:
  *          - Bearer: []
  *     produces:
@@ -178,6 +182,8 @@ traineeRouter.route('/')
  * /api/trainee:
  *   put:
  *     description: Returns the success reponse on Updation
+ *     tags:
+ *      - Trainee
  *     security:
  *          - Bearer: []
  *     produces:
@@ -224,6 +230,8 @@ traineeRouter.route('/')
  * /api/trainee:
  *   delete:
  *     description: Returns the success reponse on deletion
+ *     tags:
+ *      - Trainee
  *     security:
  *       - Bearer: []
  *     produces:

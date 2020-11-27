@@ -71,7 +71,7 @@ class TraineeController {
                 .then((res1) => {
                     console.log('Response is: ', res1);
                     res.status(200).send({
-                        status: 'OK',
+                        status: 'OK', 
                         message: 'Trainee created successfully',
                         data: res1 })
                 })
@@ -81,12 +81,12 @@ class TraineeController {
     }
     update = (req, res, next) => {
         try {
-            const { role, name, id, email } = req.body;
+            const { role, name, id, email , pass1} = req.body;
             console.log('Inside Update method of Trianee controller ');
             userModel.findOne({ originalId: id }, (err, result) => {
 
                 if (result != null) {
-                    this.userRepository.update({ name: name, role: role, email: email }, result.id)
+                    this.userRepository.update({ updatedAt:Date.now(), updatedBy:id, createdBy:id, name:name || result.name, role: role || result.role, email:email || result.email, password: pass1 || result.password }, result.id)
                         .then((data) => {
                             console.log("respnse is ", data);
                             res.status(200).send({ 
@@ -105,11 +105,11 @@ class TraineeController {
 
     public delete = (req, res, next) => {
         try {
-            const id = req.params.id;
+            const id = req.query.id;
             const userData = userModel.findOne({ originalId: id })
             userModel.findOne({ originalId: id })
             console.log(id, "  Value of ID")
-            const remover = '5fb3663da080091a8c21d58b';
+            const remover = id;
             console.log(remover, " remover")
             const user = new UserRepository();
             user.delete(id, remover)
