@@ -4,9 +4,7 @@ import config from '../config/configuration';
 
 const userRepository: UserRepository = new UserRepository();
 export default () => {
-    
     userRepository.count()
-    
         .then(res => {
             console.log('The Count is: ', res );
             if (res === 0) {
@@ -29,5 +27,6 @@ export default () => {
             console.log('data is already seeded');    
                 }
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err)); 
 }
+  
