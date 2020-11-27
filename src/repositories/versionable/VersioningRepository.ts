@@ -50,7 +50,7 @@ export default class VersioningRepository<D extends mongoose.Document, M extends
         return this.model.update({ originalId: id, deletedAt: null }, {});
     }
 
-
+ 
 
     public async update(data: any, id: string): Promise<D> {
         let originalData;
@@ -83,8 +83,9 @@ export default class VersioningRepository<D extends mongoose.Document, M extends
 
         let originalData;
 
-        await this.findOne({ id: id, deletedAt: null })
-            .then((data) => {
+        const data = await this.findOne({ _id: id, deletedAt: null });
+        console.log("data",data)
+            if(data){
                 if (data === null) {
                     throw '';
                 }
@@ -105,10 +106,10 @@ export default class VersioningRepository<D extends mongoose.Document, M extends
                         }
                     });
 
-            });
+            };
     }
-    public async list(userRole, sort, skip, limit): Promise<D[]> {
-        return this.model.find({role: userRole}).sort(sort).skip(Number(skip)).limit(Number(limit));
+    public async list(userRole, sort, skip, limit, searchBy): Promise<D[]> {
+        return this.model.find({role: userRole, deletedAt: undefined, ...searchBy}).sort(sort).skip(Number(skip)).limit(Number(limit));
     }
 }
 

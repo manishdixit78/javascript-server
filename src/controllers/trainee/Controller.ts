@@ -2,6 +2,8 @@
 import { NextFunction, Response } from 'express';
 import { userModel } from '../../repositories/user/UserModel';
 import UserRepository from '../../repositories/user/UserRepository';
+import * as bcrypt from 'bcrypt';
+
 class TraineeController {
     static instance: TraineeController;
     static getInstance() {
@@ -22,6 +24,7 @@ class TraineeController {
         try {
             console.log('Inside GET method of Trianee controller ');
             let sort: any;
+            let trainee: any;
            
             if (req.query.sort === 'email') {
                 sort = {email: req.query.sortedby };
@@ -31,16 +34,28 @@ class TraineeController {
             } 
             else
             sort = { createdAt: -1 };
-            const trainee = await this.userRepository.list1('trainee', sort, req.query.skip, req.query.limit);
+            let search: any;
+            if (req.query.searchBy !== undefined) {
+                search = await this.userRepository.list1('trainee', sort, req.query.skip, req.query.limit, { name: {$regex: req.query.searchBy}});
+                const list = await this.userRepository.list1('trainee', sort, req.query.skip, req.query.limit, { email: { $regex: req.query.searchBy.toLowerCase()}});
+                trainee = { ...search, ...list};   
+                
+            }
+            else {
+             trainee = await this.userRepository.list1('trainee', sort, req.query.skip, req.query.limit, {});
+            }
+            const traineeData=Object.values(trainee)
             const countTrainee = await this.userRepository.count()
             console.log('count is ' , countTrainee)
             this.userRepository.getAll()
                 .then((res1) => {
                     console.log('Response is: ', res1);
-                    res.status(200).send({ message: 'successfully fetched Trainee', 
+                    res.status(200).send({ 
+                    status: 'OK',
+                    message: 'successfully fetched Trainee', 
                     TotalCount: countTrainee, 
-                    TraineeCount: trainee.length,
-                    record: trainee 
+                    TraineeCount: traineeData.length,
+                    record: traineeData
                 })
                 })
         } catch (err) {
@@ -50,10 +65,15 @@ class TraineeController {
     create = (req, res, next) => {
         try {
             console.log('Inside POST method of Trianee controller ');
-            this.userRepository.create({ role: req.body.role, name: req.body.name })
+            //const pass=req.body.password;
+            const pass1=bcrypt.hashSync(req.body.password, 10)
+            this.userRepository.create({ role: req.body.role, name: req.body.name, email: req.body.email, password: pass1})
                 .then((res1) => {
                     console.log('Response is: ', res1);
-                    res.status(200).send({ message: 'Trainee created successfully', data: res1 })
+                    res.status(200).send({
+                        status: 'OK', 
+                        message: 'Trainee created successfully',
+                        data: res1 })
                 })
         } catch (err) {
             console.log('Inside Error', err);
@@ -61,15 +81,18 @@ class TraineeController {
     }
     update = (req, res, next) => {
         try {
-            const { role, name, id, email } = req.body;
+            const { role, name, id, email , pass1} = req.body;
             console.log('Inside Update method of Trianee controller ');
             userModel.findOne({ originalId: id }, (err, result) => {
 
                 if (result != null) {
-                    this.userRepository.update({ name: name, role: role, email: email }, result.id)
+                    this.userRepository.update({ updatedAt:Date.now(), updatedBy:id, createdBy:id, name:name || result.name, role: role || result.role, email:email || result.email, password: pass1 || result.password }, result.id)
                         .then((data) => {
                             console.log("respnse is ", data);
-                            res.status(200).send({ message: "successfully upddate", data: data });
+                            res.status(200).send({ 
+                                status: 'OK',
+                                message: "successfully upddate", 
+                                data: data });
                         })
                 }
             })
@@ -82,16 +105,17 @@ class TraineeController {
 
     public delete = (req, res, next) => {
         try {
-            const id = req.params.id;
+            const id = req.query.id;
             const userData = userModel.findOne({ originalId: id })
             userModel.findOne({ originalId: id })
             console.log(id, "  Value of ID")
-            const remover = '5fb3663da080091a8c21d58b';
+            const remover = id;
             console.log(remover, " remover")
             const user = new UserRepository();
             user.delete(id, remover)
                 .then((result) => {
                     res.send({
+                        status: 'OK',
                         message: 'Deleted successfully', result,
                         code: 200,
                         data: result
@@ -108,4 +132,3 @@ class TraineeController {
 }
 export default TraineeController.getInstance();
 
-//export default new TraineeController();
