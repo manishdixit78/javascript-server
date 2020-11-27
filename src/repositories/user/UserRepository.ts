@@ -3,7 +3,6 @@ import { userModel } from './UserModel';
 import IUserModel from './IUserModel';
 import VersionableRepository from '../versionable/VersioningRepository';
 export default class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
-
     public static generateObjectId() {
         return String(mongoose.Types.ObjectId());
     }
@@ -42,3 +41,4 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
      }
 
 }
+
