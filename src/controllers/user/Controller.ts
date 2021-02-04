@@ -27,7 +27,7 @@ class UserController {
                     if (bcrypt.compareSync(password,result.password)) {
 
                         const token = jwt.sign({ result }, config.secretKey, {
-                            expiresIn: '1d'
+                            expiresIn: '15m'
                         });
                         console.log(result);
                         console.log(token);
