@@ -1,6 +1,7 @@
 import * as mongoose from "mongoose";
 import { DocumentQuery, Query } from "mongoose";
 import IVersionableDocument from './IVersionableDocument';
+import bcrypt from 'bcrypt';
 
 export default class VersioningRepository<D extends mongoose.Document, M extends mongoose.Model<D>>
 {
@@ -46,68 +47,48 @@ export default class VersioningRepository<D extends mongoose.Document, M extends
         const finalQuery = { deleteAt: null, ...query };
         return this.model.find(finalQuery, projection, options);
     }
-    public invalidate(id: any): DocumentQuery<D, D> {
-        return this.model.update({ originalId: id, deletedAt: null }, {});
-    }
-
- 
-
-    public async update(data: any, id: string): Promise<D> {
-        let originalData;
-        const prev = await this.findOne({ originalId: id, deletedAt: null, deletedBy: null })
-        originalData = prev;
-        this.updateOne(originalData);
-        const newData = Object.assign(JSON.parse(JSON.stringify(originalData)), data);
+  
+    protected async update(data): Promise<D> {
+        const prev = await this.findOne({ originalId: data.originalId, deletedAt: null });
+        console.log('previous values', prev);
+        if (prev) {
+        console.log('trying to call invalidate');
+        await this.invalidate(data.originalId);
+        }
+        else {
+        return undefined;
+        }
+        console.log('Data inside update', data);
+        if (data.password !== undefined) {
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(data.password, salt);
+        data.password = hash;
+        }
+        const dataToUpdate = {
+        originalId: data.originalId,
+        ...data
+        };
+        const newData = Object.assign(JSON.parse(JSON.stringify(prev)), dataToUpdate);
         newData._id = VersioningRepository.generateObjectId();
         delete newData.deletedAt;
         const model = new this.model(newData);
         return model.save();
-    }
-    public async updateOne(originalData: any) {
-        const oldId = originalData._id;
-        const oldModel = {
-            ...originalData,
-            deletedBy: oldId,
-            deletedAt: Date.now(),
-        };
-        this.model.updateOne({ originalId: oldId }, oldModel)
-            .then((res) => {
-                if (res === null) {
-                    throw 'Error';
-                }
-            })
-            .catch((err) => { console.log("errror is : ", err) });
-    }
-
-    public async delete(id: string, remover: string) {
-
-        let originalData;
-
-        const data = await this.findOne({ _id: id, deletedAt: null });
-        console.log("data",data)
-            if(data){
-                if (data === null) {
-                    throw '';
-                }
-
-                originalData = data;
-                const oldId = originalData._id;
-
-                const modelDelete = {
-                    ...originalData,
-                    deletedAt: Date.now(),
-                    deletedBy: remover,
-                };
-
-                this.model.updateOne({ _id: oldId }, modelDelete)
-                    .then((res) => {
-                        if (res === null) {
-                            throw '';
-                        }
-                    });
-
-            };
-    }
+        }
+        
+        public async delete(id: string): Promise<D> {
+        const previous = await this.findOne({ originalId: id, deletedAt: null });
+        console.log('previous data', previous);
+        if (previous) {
+        await this.invalidate(id);
+        return previous;
+        }
+        }
+        
+        protected invalidate(id: string): DocumentQuery<D, D> {
+        const query: any = { originalId: id, deletedAt: { $exists: false } };
+        const data: any = { deletedAt: Date.now() };
+        return this.model.updateOne(query, data);
+        }
     public async list(userRole, sort, skip, limit, searchBy): Promise<D[]> {
         return this.model.find({role: userRole, deletedAt: undefined, ...searchBy}).sort(sort).skip(Number(skip)).limit(Number(limit));
     }

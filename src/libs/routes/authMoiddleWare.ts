@@ -11,6 +11,7 @@ export default (moduleName: string, permissionType: string) => (req: IRequest, r
 
         console.log("::::::::::::INSIDE AUTHMIDDLEWARE::::::::::::");
         const token = req.headers['authorization'];
+        console.log('recieved token :', token)
         const secret = config.secretKey;
         async function verifyUser() {
             const decodeUser = await jwt.verify(token, secret);
@@ -18,6 +19,7 @@ export default (moduleName: string, permissionType: string) => (req: IRequest, r
         }
 
         verifyUser().then((result) => {
+            console.log('result is :', result);
             if (result) {
                 const role = result.result.role;
                 console.log("role is ", role)
@@ -41,7 +43,7 @@ export default (moduleName: string, permissionType: string) => (req: IRequest, r
                             }
                             else {
                                 next({
-                                    status: 403,
+                                    status: res.status(403),
                                     error: "Unauthorized",
                                     message: "Permission denied",
                                 });
@@ -51,11 +53,19 @@ export default (moduleName: string, permissionType: string) => (req: IRequest, r
                     .catch((err) => { console.log(err) });
             }
             else {
-                console.log("Has problem in token");
+                next({
+                    status: 403,
+                    error: "Token expired",
+                    message: "Permission denied",
+                });
             }
         })
             .catch((err) => {
-                console.log("Error : ", err);
+                next({
+                    status: res.status(403),
+                    error: "Token expire",
+                    message: "Permission denied",
+                });
             })
     }
 

@@ -25,14 +25,15 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
         });
         return model.save();
     }
-    public update(id: any, data: any): Promise<IUserModel> {
-        console.log('USerRepository:: update', data);
-        return super.update(id, data);
+   
+    public update(data: any): Promise<IUserModel> {
+    console.log('UserRepository:: update', data);
+    return super.update(data);
     }
-
-    public deleteData(id, remover) {
-        return super.delete(id, remover);
-    }
+    
+    public deleteData(originalId: any) {
+        return super.delete(originalId);
+        }
     public count() {
         return userModel.countDocuments();
     }
