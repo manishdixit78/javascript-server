@@ -1,15 +1,5 @@
 const config = {
     create: {
-        id: {
-            required: true, string: true,
-            in: ['body'],
-            custom: function (value) {
-                console.log('Value', value);
-                throw {
-                    error: 'Error Occured', message: 'Message'
-                }
-            }
-        },
         email: {
             required: true,
             string: true,
@@ -26,7 +16,7 @@ const config = {
         }
     },
     delete: {
-        id: {
+        originalId: {
             required: true,
             errorMessage: 'Id is required',
             in: ['query']
@@ -34,33 +24,27 @@ const config = {
     },
 
     get: {
-        skip: {
-            required: false,
-            default: 0,
-            number: true,
-            in: ['query'],
-            errorMessage: 'Skip is invalid',
-        },
+        // skip: {
+        //     required: false,
+        //     default: 0,
+        //     number: true,
+        //     in: ['query'],
+        //     errorMessage: 'Skip is invalid',
+        // },
 
-        limit: {
-            required: false,
-            default: 10,
-            number: true,
-            in: ['query'],
-            errorMessage: 'Limit is invalid',
-        }
+        // limit: {
+        //     required: false,
+        //     default: 10,
+        //     number: true,
+        //     in: ['query'],
+        //     errorMessage: 'Limit is invalid',
+        // }
     },
     update: {
-        id: {
+        originalId: {
             required: true, string: true,
             in: ['body']
         },
-        dataToUpdate: {
-            in: ['body'], 
-            required: true,
-            isObject: true,
-            custom: function (dataToUpdate) { },
-        }
     }
 }
 

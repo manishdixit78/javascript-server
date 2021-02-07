@@ -1,6 +1,6 @@
 const config = {
     create: {
-        id: {
+        password: {
             required: true, string: true,
             in: ['body'],
             custom: function (value) {
@@ -11,11 +11,11 @@ const config = {
             }
         },
 
-        name: {
+        email: {
             required: true,
             regex: '',
             in: ['body'],
-            errorMessage: 'Name is required',
+            errorMessage: 'email is required',
         }
     },
     delete: {
@@ -27,21 +27,21 @@ const config = {
     },
 
     get: {
-        skip: {
-            required: false,
-            default: 0,
-            number: true,
-            in: ['query'],
-            errorMessage: 'Skip is invalid',
-        },
+        // skip: {
+        //     required: false,
+        //     default: 0,
+        //     number: true,
+        //     in: ['query'],
+        //     errorMessage: 'Skip is invalid',
+        // },
 
-        limit: {
-            required: false,
-            default: 10,
-            number: true,
-            in: ['query'],
-            errorMessage: 'Limit is invalid',
-        }
+        // limit: {
+        //     required: false,
+        //     default: 10,
+        //     number: true,
+        //     in: ['query'],
+        //     errorMessage: 'Limit is invalid 11',
+        // }
     },
     update: {
         id: {

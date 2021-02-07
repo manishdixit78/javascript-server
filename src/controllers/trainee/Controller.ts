@@ -1,6 +1,3 @@
-// create a class according to instructions that mention in #39523
-import { NextFunction, Response } from 'express';
-import { userModel } from '../../repositories/user/UserModel';
 import UserRepository from '../../repositories/user/UserRepository';
 import * as bcrypt from 'bcrypt';
 
@@ -65,9 +62,8 @@ class TraineeController {
     create = (req, res, next) => {
         try {
             console.log('Inside POST method of Trianee controller ');
-            //const pass=req.body.password;
             const pass1=bcrypt.hashSync(req.body.password, 10)
-            this.userRepository.create({ role: req.body.role, name: req.body.name, email: req.body.email, password: pass1})
+            this.userRepository.create({ role: req.body.role || "trainee", name: req.body.name, email: req.body.email, password: pass1})
                 .then((res1) => {
                     console.log('Response is: ', res1);
                     res.status(200).send({
@@ -79,56 +75,50 @@ class TraineeController {
             console.log('Inside Error', err);
         }
     }
-    update = (req, res, next) => {
+    
+    update = async (req, res, next) => {
         try {
-            const { role, name, id, email , pass1} = req.body;
-            console.log('Inside Update method of Trianee controller ');
-            userModel.findOne({ originalId: id }, (err, result) => {
-
-                if (result != null) {
-                    this.userRepository.update({ updatedAt:Date.now(), updatedBy:id, createdBy:id, name:name || result.name, role: role || result.role, email:email || result.email, password: pass1 || result.password }, result.id)
-                        .then((data) => {
-                            console.log("respnse is ", data);
-                            res.status(200).send({ 
-                                status: 'OK',
-                                message: "successfully upddate", 
-                                data: data });
-                        })
-                }
-            })
-
-
+        console.log("::::::::::::INSIDE UPDATE METHOD::::::::::::");
+        const { originalId, name, role, email } = req.body;
+        const trainee = await this.userRepository.update({ originalId: originalId, name: name, role: role || "trainee", email: email });
+        if (trainee) {
+        console.log('Response of Repo is', trainee);
+        res.send({
+        status: "Ok",
+        message: "Trainee Updated Successfully",
+        data: req.body,
+        });
+        }
         } catch (err) {
-            console.log('Inside Error', err);
+        res.send({
+        status: 404,
+        message: 'Trainee Not Found for update',
+        });
         }
-    }
-
-    public delete = (req, res, next) => {
+        }
+        
+        delete = async (req, res, next) => {
         try {
-            const id = req.query.id;
-            const userData = userModel.findOne({ originalId: id })
-            userModel.findOne({ originalId: id })
-            console.log(id, "  Value of ID")
-            const remover = id;
-            console.log(remover, " remover")
-            const user = new UserRepository();
-            user.delete(id, remover)
-                .then((result) => {
-                    res.send({
-                        status: 'OK',
-                        message: 'Deleted successfully', result,
-                        code: 200,
-                        data: result
-                    });
-                })
+        console.log("::::::::::::INSIDE DELETE METHOD::::::::::::");
+        const { originalId } = req.query;
+        console.log('req.body : ', originalId);
+        const result = await this.userRepository.delete(String(originalId));
+        if (result) {
+        res.send({
+        status: "Ok",
+        code: 200,
+        message: "Trainee Deleted Successfully",
+        data: result,
+        });
         }
-        catch (err) {
-            res.send({
-                message: 'User not found to be deleted',
-                code: 404
-            });
-        };
+        } catch (err) {
+        console.log("User not found to be deleted");
+        res.send({
+        status: "error",
+        message: 'User not found to be deleted',
+        code: 404
+        });
+        }
     }
 }
 export default TraineeController.getInstance();
-

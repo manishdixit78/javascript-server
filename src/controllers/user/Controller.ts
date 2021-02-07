@@ -1,6 +1,5 @@
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import UserRepository from '../../repositories/user/UserRepository';
 import * as bcrypt from 'bcrypt';
 import config from '../../config/configuration';
 import { userModel } from "../../repositories/user/UserModel";
@@ -27,7 +26,6 @@ class UserController {
                 if (result) {
                     if (bcrypt.compareSync(password,result.password)) {
 
-                        // result.password = bcrypt.hashSync(result.password, 10);
                         const token = jwt.sign({ result }, config.secretKey, {
                             expiresIn: '15m'
                         });
@@ -41,15 +39,15 @@ class UserController {
                     }
                     else {
                         res.send({
+                            status: 400,
                             message: 'Password Doesnt Match',
-                            status: 400
                         });
                     }
                 }
                 else {
                     res.send({
+                        status: 404,
                         message: 'Email is not Registered',
-                        status: 404
                     });
                 }
             });
@@ -60,6 +58,4 @@ class UserController {
     }
 }
 export default UserController.getInstance();
-// conflict
-
 
